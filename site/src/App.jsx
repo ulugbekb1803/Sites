@@ -1,170 +1,159 @@
-import React, { useState } from "react";
 import styles from "./App.module.css";
+import { useEffect, useState } from "react";
 
-export default function App() {
-  return (
-    <div className={styles.wrapper}>
-      {/* HEADER */}
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <div className={styles.logoIcon}></div>
-          <span>Creative Agency</span>
-        </div>
+const cities = {
+Tashkent:{lat:41.31,lon:69.28},
+Samarkand:{lat:39.65,lon:66.97},
+Bukhara:{lat:39.77,lon:64.42},
+Namangan:{lat:41.00,lon:71.64},
+Andijan:{lat:40.78,lon:72.34},
+Nukus:{lat:42.46,lon:59.61},
+Fergana:{lat:40.39,lon:71.78},
+Qarshi:{lat:38.86,lon:65.79},
+Urgench:{lat:41.55,lon:60.63},
+Jizzakh:{lat:40.11,lon:67.84},
+Termez:{lat:37.22,lon:67.27},
+Navoi:{lat:40.08,lon:65.37}
+};
 
-        <nav className={styles.nav}>
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Sevices</a>
-          <a href="#">Projects</a>
-          <a href="#">Blog</a>
-        </nav>
+function App(){
 
-        <button className={styles.contactBtn}>Contact</button>
-      </header>
+const [city,setCity]=useState("Tashkent");
+const [weather,setWeather]=useState(null);
 
-      {/* HERO */}
-      <section className={styles.hero}>
-        <h1>
-          Make your dream <br />
-          business goal come true
-        </h1>
+useEffect(()=>{
 
-        <p>
-          When you need us for improve your business,
-          <br />
-          then come with us to help your business have reach it.
-        </p>
+const {lat,lon}=cities[city];
 
-        <button className={styles.primaryBtn}>Start Project</button>
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+.then(res=>res.json())
+.then(data=>setWeather(data));
 
-        <div className={styles.heroImage}></div>
-      </section>
+},[city]);
 
-      {/* ABOUT */}
-      <section className={styles.about}>
-        <p className={styles.smallTitle}>About Us</p>
-        <h2>Our Teammate</h2>
+return(
 
-        <div className={styles.aboutContent}>
-          <div className={styles.aboutImage}></div>
+<div className={styles.container}>
 
-          <div className={styles.aboutText}>
-            <p>
-              We move with make a Creative Strategy for help your business
-              goal, we help to improve your income by a services we have.
-            </p>
+<header className={styles.header}>
+<div className={styles.logo}>UzWeather</div>
+</header>
 
-            <p>
-              We have 20+ Creative team to support your business.
-              We provide design, digital marketing and more.
-            </p>
+<section className={styles.hero}>
+<h1>Погода в Узбекистане</h1>
+<p>Актуальная погода и прогноз на неделю</p>
+</section>
 
-            <div className={styles.aboutButtons}>
-              <button className={styles.primaryBtn}>About Us</button>
-              <button className={styles.outlineBtn}>Our Story</button>
-            </div>
-          </div>
-        </div>
-      </section>
+<div className={styles.cityButtons}>
+{Object.keys(cities).map(c=>(
+<button key={c} onClick={()=>setCity(c)} className={styles.button}>
+{c}
+</button>
+))}
+</div>
 
-      {/* SERVICES */}
-      <section className={styles.services}>
-        <p className={styles.smallTitle}>Our Service</p>
-        <h2>Perfect and Fast Movement</h2>
+{weather && (
 
-        <p className={styles.serviceText}>
-          We move with make a Creative Strategy for help your business goal,
-          we help to improve your income by a services we have.
-        </p>
+<div className={styles.currentWeather}>
 
-        <div className={styles.serviceGrid}>
-          <div className={styles.serviceCard}>
-            <div className={styles.iconBlue}></div>
-            <h4>Social Media Management</h4>
-          </div>
+<img
+className={styles.weatherIcon}
+src="https://cdn-icons-png.flaticon.com/512/869/869869.png"
+/>
 
-          <div className={styles.serviceCard}>
-            <div className={styles.iconRed}></div>
-            <h4>Search Engine Optimization</h4>
-          </div>
+<div>
 
-          <div className={styles.serviceCard}>
-            <div className={styles.iconGreen}></div>
-            <h4>Design</h4>
-          </div>
+<h2>{city}</h2>
+<p>Температура: {weather.current_weather.temperature}°C</p>
+<p>Ветер: {weather.current_weather.windspeed} km/h</p>
 
-          <div className={styles.serviceCard}>
-            <div className={styles.iconYellow}></div>
-            <h4>Ads</h4>
-          </div>
-        </div>
-      </section>
+</div>
 
-      {/* PORTFOLIO */}
-      <section className={styles.portfolio}>
-        <p className={styles.smallTitle}>Our Portfolio</p>
-        <h2>What do we do</h2>
+</div>
 
-        <div className={styles.portfolioGrid}>
-          <div className={styles.portfolioCard}></div>
-          <div className={styles.portfolioCard}></div>
-          <div className={styles.portfolioCard}></div>
-        </div>
+)}
 
-        <button className={styles.outlineBtn}>See All Portfolio</button>
-      </section>
+{weather && (
 
-      {/* TESTIMONIAL */}
-      <section className={styles.testimonial}>
-        <h2>People Talk about us</h2>
+<section>
 
-        <div className={styles.testimonialGrid}>
-          <div className={styles.testCard}>
-            <p>
-              Veniam quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </p>
-            <span>Angel Rose</span>
-          </div>
+<h2 className={styles.title}>Прогноз на неделю</h2>
 
-          <div className={styles.testCard}>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur.
-            </p>
-            <span>Mark Wood</span>
-          </div>
+<div className={styles.week}>
 
-          <div className={styles.testCard}>
-            <p>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa.
-            </p>
-            <span>Angel Rose</span>
-          </div>
-        </div>
-      </section>
+{weather.daily.time.map((day,index)=>(
 
-      {/* COLLAB */}
-      <section className={styles.collab}>
-        <div>
-          <h2>Interesting Collaboration With Us?</h2>
-          <button className={styles.primaryBtn}>Get Started</button>
-        </div>
+<div key={index} className={styles.card}>
 
-        <div className={styles.collabImage}></div>
-      </section>
+<img
+className={styles.cardIcon}
+src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png"
+/>
 
-      {/* FOOTER */}
-      <footer className={styles.footer}>
-        <div className={styles.footerLogo}>
-          <div className={styles.logoIcon}></div>
-          <span>Creative Agency</span>
-        </div>
+<p>{day}</p>
 
-        <p className={styles.copy}>
-          Copyright © 2025 Creative Agency. All rights reserved.
-        </p>
-      </footer>
-    </div>
-  );
+<p>
+{weather.daily.temperature_2m_max[index]}° /
+{weather.daily.temperature_2m_min[index]}°
+</p>
+
+</div>
+
+))}
+
+</div>
+
+</section>
+
+)}
+
+{/* WEATHER TYPES FOR UZBEKISTAN */}
+
+<section>
+
+<h2 className={styles.title}>Типичная погода в Узбекистане</h2>
+
+<div className={styles.gallery}>
+
+<img src="https://images.unsplash.com/photo-1501973801540-537f08ccae7b"/>
+<img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21"/>
+<img src="https://images.unsplash.com/photo-1461511669078-d46bf351cd6e"/>
+<img src="https://images.unsplash.com/photo-1503437313881-503a91226402"/>
+<img src="https://images.unsplash.com/photo-1519681393784-d120267933ba"/>
+<img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9"/>
+
+</div>
+
+</section>
+
+<section className={styles.info}>
+
+<h2>Климат Узбекистана</h2>
+
+<p>
+Узбекистан имеет резко континентальный климат.
+Лето здесь жаркое и сухое, температура часто
+достигает 35–40°C.
+</p>
+
+<p>
+Зимой температура может опускаться ниже нуля,
+особенно в северных регионах страны.
+Весна и осень считаются самыми комфортными сезонами.
+</p>
+
+</section>
+
+<footer className={styles.footer}>
+
+<p>UzWeather • Weather service for Uzbekistan</p>
+
+</footer>
+
+</div>
+
+)
+
 }
+
+export default App

@@ -11,166 +11,225 @@
 }
 
 .container{
-font-family:Arial;
+
 min-height:100vh;
-color:#1a2b49;
-background:linear-gradient(#8ec5fc,#e0f3ff);
-animation:pageLoad 1.5s ease;
+
+font-family:monospace;
+
+background:linear-gradient(135deg,#020024,#090979,#00d4ff);
+
+color:white;
+
+text-align:center;
+
+padding:20px;
+
+animation:bg 15s infinite alternate;
+
 }
 
 /* HEADER */
 
-.header{
-display:flex;
-justify-content:flex-start;
-padding:20px 40px;
-}
-
 .logo{
-font-size:22px;
-font-weight:bold;
+
+font-size:32px;
+
+margin-bottom:10px;
+
+text-shadow:0 0 15px #00eaff;
+
 }
 
-/* HERO */
+.clock{
 
-.hero{
-text-align:center;
-padding:120px 20px;
-animation:fadeDown 1.2s;
+font-size:28px;
+
+color:#00ffcc;
+
+text-shadow:0 0 10px #00ffcc;
+
 }
 
-/* BUTTONS */
+.date{
 
-.cityButtons{
-text-align:center;
-margin-bottom:40px;
+margin-bottom:20px;
+
 }
 
-.button{
-margin:8px;
-padding:10px 16px;
+/* SEARCH */
+
+.search{
+
+width:80%;
+
+max-width:600px;
+
+padding:14px;
+
+border-radius:12px;
+
 border:none;
-border-radius:10px;
-background:#ffffff;
-cursor:pointer;
-transition:0.3s;
+
+margin-bottom:25px;
+
+font-size:16px;
+
 }
 
-.button:hover{
-transform:translateY(-3px);
-background:#ffe066;
+/* CITY BUTTONS */
+
+.cityList{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:10px;
+
+margin-bottom:30px;
+
+}
+
+.cityBtn{
+
+padding:10px 16px;
+
+border:none;
+
+border-radius:10px;
+
+background:#111;
+
+color:#00eaff;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.cityBtn:hover{
+
+transform:scale(1.1);
+
+box-shadow:0 0 10px #00eaff;
+
 }
 
 /* CURRENT WEATHER */
 
 .currentWeather{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:30px;
-margin-bottom:50px;
-animation:fadeUp 1.5s;
-}
 
-.weatherIcon{
-width:90px;
-animation:rotateSun 10s linear infinite;
+margin:20px auto;
+
+padding:20px;
+
+width:250px;
+
+background:rgba(0,0,0,0.5);
+
+border-radius:12px;
+
+box-shadow:0 0 15px #00eaff;
+
 }
 
 /* WEEK */
 
 .week{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+
 gap:20px;
-margin-bottom:60px;
+
+margin-top:30px;
+
 }
 
+/* CARD */
+
 .card{
-background:white;
+
+background:rgba(0,0,0,0.5);
+
 padding:20px;
-border-radius:15px;
-width:140px;
-text-align:center;
-box-shadow:0 10px 20px rgba(0,0,0,0.1);
-transition:0.4s;
-animation:float 4s infinite ease-in-out;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:0.3s;
+
+box-shadow:0 0 10px #00eaff;
+
 }
 
 .card:hover{
-transform:scale(1.1);
+
+transform:translateY(-8px);
+
+box-shadow:0 0 20px #00eaff;
+
 }
 
-.cardIcon{
-width:50px;
-}
+/* DETAILS */
 
-/* GALLERY */
+.details{
 
-.gallery{
-display:grid;
-grid-template-columns:repeat(3,280px);
-gap:20px;
-justify-content:center;
-margin-bottom:60px;
-}
+margin-top:40px;
 
-.gallery img{
-width:280px;
-height:180px;
-object-fit:cover;
+padding:25px;
+
+background:rgba(0,0,0,0.6);
+
 border-radius:12px;
-transition:0.4s;
+
+box-shadow:0 0 20px #00eaff;
+
+max-width:400px;
+
+margin-left:auto;
+
+margin-right:auto;
+
 }
 
-.gallery img:hover{
-transform:scale(1.08);
-}
+.closeBtn{
 
-/* INFO */
+margin-top:15px;
 
-.info{
-max-width:900px;
-margin:auto;
-line-height:1.6;
-text-align:center;
-margin-bottom:80px;
-animation:fadeUp 1.5s;
+padding:8px 14px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+background:#00eaff;
+
 }
 
 /* FOOTER */
 
 .footer{
-text-align:center;
-padding:30px;
-background:#d7ecff;
+
+margin-top:60px;
+
+opacity:0.8;
+
 }
 
-/* ANIMATIONS */
+/* BG animation */
 
-@keyframes pageLoad{
-from{opacity:0;}
-to{opacity:1;}
-}
+@keyframes bg{
 
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-50px);}
-to{opacity:1;transform:translateY(0);}
-}
+0%{background-position:left;}
 
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
-}
+100%{background-position:right;}
 
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-8px);}
-100%{transform:translateY(0);}
-}
-
-@keyframes rotateSun{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
 }
